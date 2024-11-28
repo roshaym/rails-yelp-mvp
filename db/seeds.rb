@@ -10,10 +10,10 @@
 # db/seeds.rb
 # 1. Clean the database 🗑️
 
-TYPE = ["chinese", "italian", "japanese", "french", "belgian"]
+TYPE = ["Chinese", "Italian", "Japanese", "French", "Belgian"]
 
 puts "Cleaning database..."
-Restaurant.destroy_all
+Restaurant.destroy_all if Rails.env.development?
 
 # require 'faker'
 
@@ -22,14 +22,14 @@ puts 'Creating 5 fake restaurants...'
   restaurant = Restaurant.new(
     name:    Faker::Company.name,
     address: "#{Faker::Address.street_address}, #{Faker::Address.city}",
-    phone_number: Faker::PhoneNumber,
+    phone_number: Faker::PhoneNumber.phone_number_with_country_code,
     category: TYPE[rand(0..4)]
   )
   restaurant.save!
   puts restaurant.category
 end
 puts "Finished! Created #{Restaurant.count} restaurants."
-
+p Restaurant.all
 
 # # 2. Create the instances 🏗️
 # puts "Creating restaurants..."
